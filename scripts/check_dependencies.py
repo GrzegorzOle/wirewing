@@ -50,6 +50,26 @@ ALLOWED = (
 # które nie są dystrybuowane razem z produktem.
 IGNORED = {"wirewing", "pip", "setuptools", "wheel"}
 
+# Świadome decyzje licencyjne. Trafia tu pakiet, który sam z siebie wypadłby jako
+# REVIEW lub UNKNOWN, ale przeprowadzono dla niego analizę i zapadła decyzja.
+# Uzasadnienie jest częścią raportu, żeby nie było potrzeby odtwarzania go
+# z pamięci przy następnym audycie.
+#
+# Wpis tutaj NIE przesłania statusu FORBIDDEN — licencji silnie copyleft nie da
+# się przepchnąć przez tę tablicę i to jest zamierzone.
+ACCEPTED = {
+    "pymavlink": (
+        "LGPL-3.0. Zależność opcjonalna (extras: mavlink), nigdy nie wciągana "
+        "przez instalację domyślną. Instalowana osobno z PyPI i importowana "
+        "dynamicznie w czasie wykonania, więc użytkownik może ją podmienić na "
+        "własną wersję albo usunąć — to spełnia warunek relinkowania z LGPLv3 "
+        "§4. Kod wirewing pozostaje na PolyForm Noncommercial; licencjobiorca "
+        "komercyjny przestrzega LGPL dla samego pymavlink we własnym zakresie. "
+        "Zgodne z zastrzeżeniem z CONTRIBUTING.md: LGPL wyłącznie dynamicznie "
+        "i po uzgodnieniu."
+    ),
+}
+
 
 def _license_of(dist: metadata.Distribution) -> str:
     meta = dist.metadata
@@ -90,8 +110,54 @@ def collect() -> list[tuple[str, str, str, str]]:
         if not name or name.lower() in IGNORED:
             continue
         license_text = _license_of(dist)
-        rows.append((name, dist.version or "?", license_text, _classify(license_text)))
+        status = _classify(license_text)
+        # Decyzja podniesiona do ACCEPTED tylko z REVIEW/UNKNOWN — FORBIDDEN zostaje.
+        if status in ("REVIEW", "UNKNOWN") and name.lower() in ACCEPTED:
+            status = "ACCEPTED"
+        rows.append((name, dist.version or "?", license_text, status))
     return sorted(set(rows), key=lambda r: r[0].lower())
+
+
+Row = tuple[str, str, str, str]
+
+
+def _report_markdown(rows: list[Row], accepted: list[Row]) -> None:
+    print("# Licencje zależności\n")
+    print("| Pakiet | Wersja | Licencja | Status |")
+    print("|---|---|---|---|")
+    for name, version, lic, status in rows:
+        print(f"| {name} | {version} | {lic} | {status} |")
+    if accepted:
+        print("\n## Świadome decyzje licencyjne\n")
+        for name, _, _, _ in accepted:
+            print(f"**{name}** — {ACCEPTED[name.lower()]}\n")
+
+
+def _report_text(rows: list[Row]) -> None:
+    width = max((len(r[0]) for r in rows), default=10)
+    for name, version, lic, status in rows:
+        print(f"{status:<10} {name:<{width}} {version:<12} {lic}")
+
+
+def _warn_forbidden(forbidden: list[Row]) -> None:
+    print("BŁĄD: zależności o licencjach niezgodnych z modelem projektu:", file=sys.stderr)
+    for name, version, lic, _ in forbidden:
+        print(f"  - {name} {version}: {lic}", file=sys.stderr)
+    print("\nUsuń je albo zastąp odpowiednikiem na MIT/BSD/Apache.", file=sys.stderr)
+
+
+def _warn_accepted(accepted: list[Row]) -> None:
+    print("Świadome decyzje licencyjne:", file=sys.stderr)
+    for name, version, lic, _ in accepted:
+        print(f"  - [ACCEPTED] {name} {version}: {lic}", file=sys.stderr)
+        print(f"      {ACCEPTED[name.lower()]}", file=sys.stderr)
+    print(file=sys.stderr)
+
+
+def _warn_review(review: list[Row]) -> None:
+    print("UWAGA: wymagają ręcznej decyzji:", file=sys.stderr)
+    for name, version, lic, status in review:
+        print(f"  - [{status}] {name} {version}: {lic}", file=sys.stderr)
 
 
 def main() -> int:
@@ -103,35 +169,28 @@ def main() -> int:
     rows = collect()
     forbidden = [r for r in rows if r[3] == "FORBIDDEN"]
     review = [r for r in rows if r[3] in ("REVIEW", "UNKNOWN")]
+    accepted = [r for r in rows if r[3] == "ACCEPTED"]
 
     if args.format == "markdown":
-        print("# Licencje zależności\n")
-        print("| Pakiet | Wersja | Licencja | Status |")
-        print("|---|---|---|---|")
-        for name, version, lic, status in rows:
-            print(f"| {name} | {version} | {lic} | {status} |")
+        _report_markdown(rows, accepted)
     else:
-        width = max((len(r[0]) for r in rows), default=10)
-        for name, version, lic, status in rows:
-            print(f"{status:<10} {name:<{width}} {version:<12} {lic}")
+        _report_text(rows)
 
     print(file=sys.stderr)
     if forbidden:
-        print("BŁĄD: zależności o licencjach niezgodnych z modelem projektu:", file=sys.stderr)
-        for name, version, lic, _ in forbidden:
-            print(f"  - {name} {version}: {lic}", file=sys.stderr)
-        print("\nUsuń je albo zastąp odpowiednikiem na MIT/BSD/Apache.", file=sys.stderr)
+        _warn_forbidden(forbidden)
         return 1
 
+    if accepted:
+        _warn_accepted(accepted)
+
     if review:
-        print("UWAGA: wymagają ręcznej decyzji:", file=sys.stderr)
-        for name, version, lic, status in review:
-            print(f"  - [{status}] {name} {version}: {lic}", file=sys.stderr)
+        _warn_review(review)
         if args.strict:
             return 1
 
     if not forbidden and not review:
-        print("OK: wszystkie zależności mają licencje permisywne.", file=sys.stderr)
+        print("OK: brak zależności wymagających decyzji.", file=sys.stderr)
     return 0
 
 
