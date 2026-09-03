@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Testy (Python ${{ matrix.python }} / ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12", "3.13"]
+        os: [ubuntu-latest]
+        include:
+          - python: "3.12"
+            os: windows-latest
+          - python: "3.12"
+            os: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - run: pip install -e ".[dev]"
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Formatowanie
+        run: ruff format --check .
+
+      - name: Typy
+        run: mypy
+
+      - name: Testy
+        run: pytest --cov --cov-report=term-missing
+
+  licenses:
+    name: Zgodność licencji zależności
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -e ".[dev]"
+
+      # Twardy warunek: żadnej zależności na GPL/AGPL/SSPL. Jedna taka
+      # biblioteka wywraca model podwójnego licencjonowania projektu.
+      - name: Wykryj niezgodne licencje
+        run: python scripts/check_dependencies.py
+
+      - name: Wygeneruj zestawienie licencji
+        run: python scripts/check_dependencies.py --format markdown > THIRD_PARTY_LICENSES.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: third-party-licenses
+          path: THIRD_PARTY_LICENSES.md
+
+  license-file:
+    name: Kompletność LICENSE.md
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Pilnuje, żeby repozytorium nigdy nie zostało opublikowane z zaślepką
+      # zamiast dosłownego tekstu licencji.
+      - name: Sprawdź, czy tekst licencji jest wstawiony
+        run: python scripts/fetch_license.py --check
+
+  spdx:
+    name: Nagłówki SPDX
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Każdy plik .py musi mieć nagłówek SPDX
+        run: |
+          missing=0
+          while IFS= read -r file; do
+            if ! head -n 3 "$file" | grep -q "SPDX-License-Identifier"; then
+              echo "::error file=$file::brak nagłówka SPDX-License-Identifier"
+              missing=1
+            fi
+          done < <(find src scripts tests -name '*.py')
+          exit $missing
