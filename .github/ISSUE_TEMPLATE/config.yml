@@ -1,0 +1,13 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Licencja komercyjna / wycena
+    url: https://github.com/OWNER/wirewing/blob/main/COMMERCIAL.md
+    about: Chcesz używać wirewing w firmie? Warunki i kontakt są tutaj.
+
+  - name: Zgłoszenie podatności
+    url: https://github.com/OWNER/wirewing/security/advisories/new
+    about: Nie zgłaszaj podatności publicznie — użyj prywatnego kanału.
+
+  - name: Pytanie o użycie
+    url: https://github.com/OWNER/wirewing/discussions
+    about: Pytania „jak to zrobić" najlepiej zadawać w Discussions.

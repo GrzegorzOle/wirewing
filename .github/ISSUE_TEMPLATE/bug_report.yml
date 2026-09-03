@@ -1,0 +1,56 @@
+name: Zgłoszenie błędu
+description: Coś nie działa tak, jak powinno
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Dzięki za zgłoszenie. Jeśli chodzi o **podatność bezpieczeństwa**,
+        nie otwieraj publicznego issue — napisz na oleksy@cdest.eu.
+
+  - type: textarea
+    id: opis
+    attributes:
+      label: Co się dzieje
+      description: Czego oczekiwałeś i co zamiast tego zobaczyłeś.
+    validations:
+      required: true
+
+  - type: textarea
+    id: odtworzenie
+    attributes:
+      label: Jak to odtworzyć
+      description: Najkrótszy fragment kodu albo polecenie, które wywołuje problem.
+      render: python
+    validations:
+      required: true
+
+  - type: input
+    id: wersja
+    attributes:
+      label: Wersja wirewing
+      placeholder: "0.1.0 albo skrót commita"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python i system
+      placeholder: "3.12.4, Ubuntu 24.04"
+    validations:
+      required: true
+
+  - type: input
+    id: urzadzenie
+    attributes:
+      label: Urządzenie i parametry portu
+      description: Model, wersja firmware'u, prędkość i parzystość — jeśli dotyczy sprzętu.
+      placeholder: "model X, fw 2.3, 115200 8N1, przez MAX3232"
+
+  - type: textarea
+    id: logi
+    attributes:
+      label: Logi
+      description: Uruchom z `-v` i wklej istotny fragment. Usuń numery seryjne i lokalizacje.
+      render: shell
