@@ -96,9 +96,22 @@ Kolejność, która zwykle najszybciej daje wynik:
        print(name, data.count(sof))
    ```
 
+   Gotowe narzędzie robi to samo wraz z walidacją ramek i identyfikacją płyty:
+
+   ```bash
+   python scripts/probe_link.py --list       # porty wraz z VID:PID
+   python scripts/probe_link.py COM3         # nasłuch i werdykt
+   python scripts/probe_link.py COM3 --scan  # przemieć typowe prędkości
+   ```
+
    Przewaga `0xFE`/`0xFD` przy zerze na `A5 5A` przesądza sprawę: zainstaluj
    `wirewing[mavlink]` i nie odtwarzaj niczego ręcznie. O konsekwencjach
    licencyjnych tego extra (LGPL-3.0) mówi README.
+
+   Wykryta wersja MAVLinku mówi o tym, czego urządzenie używa *teraz*, a nie
+   co potrafi: ArduPilot dopasowuje wersję protokołu do stacji naziemnej na
+   danym kanale, więc ten sam kontroler nadaje v1 dopóki nie podłączy się
+   stacja mówiąca v2.
 
    Przy nasłuchu przydaje się też identyfikacja sprzętu po USB —
    `python -m serial.tools.list_ports -v` pokaże VID:PID i producenta, co

@@ -9,6 +9,9 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 - Zależność opcjonalna `wirewing[mavlink]` (`pymavlink`) dla urządzeń mówiących
   MAVLinkiem. Instalacja domyślna i `wirewing[serial]` pozostają bez niej.
+- `scripts/probe_link.py` — pasywne rozpoznanie protokołu urządzenia. Liczy
+  ramki MAVLink v1/v2 i wirewing, weryfikując ich łańcuchowanie zamiast samych
+  znaczników, identyfikuje płytę po VID:PID i nie wysyła na łącze ani bajtu.
 - `scripts/check_dependencies.py` rozróżnia teraz status `ACCEPTED` — świadomą
   decyzję licencyjną wraz z uzasadnieniem, raportowaną w zestawieniu licencji.
   Wpis na tej liście nie przesłania statusu `FORBIDDEN`.
