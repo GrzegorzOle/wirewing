@@ -22,6 +22,14 @@ się na wyjątku w twoim callbacku.
 pip install "wirewing[serial]"
 ```
 
+Warianty instalacji:
+
+| Polecenie | Co dociąga | Licencje zależności |
+|---|---|---|
+| `pip install wirewing` | nic | — |
+| `pip install "wirewing[serial]"` | `pyserial` | BSD |
+| `pip install "wirewing[mavlink]"` | `pymavlink` | **LGPL-3.0** — patrz [Urządzenia na MAVLink](#urządzenia-na-mavlink) |
+
 Z repozytorium, do pracy nad kodem:
 
 ```bash
@@ -61,6 +69,36 @@ wirewing -p /dev/ttyUSB0 monitor -t 30  # podglądaj ruch przez 30 s
 wirewing -p /dev/ttyUSB0 send arm       # wyślij komendę i poczekaj na ACK
 ```
 
+## Urządzenia na MAVLink
+
+Zanim zaczniesz odtwarzać protokół swojego urządzenia, **sprawdź, czy nie mówi
+ono MAVLinkiem** — ogromna część kontrolerów lotu tak właśnie robi. Rozpoznasz
+to po znaczniku początku ramki: `0xFE` (v1) lub `0xFD` (v2) zamiast `A5 5A`.
+Procedura sprawdzenia jest w [docs/protocol.md](docs/protocol.md).
+
+Jeśli tak jest, nie ma sensu niczego odtwarzać — zainstaluj:
+
+```bash
+pip install "wirewing[mavlink]"
+```
+
+> [!IMPORTANT]
+> **`pymavlink` jest na LGPL-3.0**, a nie na licencji permisywnej jak reszta
+> zależności. Dlatego jest **wyłącznie opcjonalny**: instalacja domyślna oraz
+> `wirewing[serial]` nie wciągają ani jednej linijki kodu na LGPL.
+>
+> Zależność jest instalowana osobno z PyPI i importowana dynamicznie w czasie
+> wykonania, więc możesz ją podmienić na własną wersję albo usunąć — co spełnia
+> warunek relinkowania z LGPLv3 §4. Kod wirewing pozostaje na PolyForm
+> Noncommercial. Jeśli masz licencję komercyjną na wirewing, zgodność z LGPL
+> dla samego `pymavlink` pozostaje po twojej stronie.
+>
+> Decyzja jest odnotowana w `scripts/check_dependencies.py` i raportowana przy
+> każdym przebiegu CI ze statusem `ACCEPTED`.
+
+Warstwa integracyjna z MAVLinkiem nie jest jeszcze napisana — na razie extra
+udostępnia samą zależność.
+
 ## Stan projektu
 
 | Warstwa | Stan |
@@ -71,6 +109,7 @@ wirewing -p /dev/ttyUSB0 send arm       # wyślij komendę i poczekaj na ACK
 | ACK/NAK, ponawianie, heartbeat | gotowe |
 | **Mapa rzeczywistych ID wiadomości urządzenia** | **do uzupełnienia** |
 | Dekodowanie ładunku telemetrii | do zrobienia |
+| Warstwa integracyjna z MAVLinkiem (`wirewing[mavlink]`) | do zrobienia |
 | GUI / stacja naziemna | poza zakresem tego repozytorium |
 
 > [!WARNING]

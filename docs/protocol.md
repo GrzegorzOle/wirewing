@@ -78,6 +78,31 @@ Kolejność, która zwykle najszybciej daje wynik:
    MAVLink-iem. Znacznik startu `0xFE` (v1) lub `0xFD` (v2) na początku ramek
    oznacza, że nie musisz niczego odtwarzać — użyj `pymavlink` i oszczędź
    sobie tygodni. Sprawdź to **zanim** zaczniesz cokolwiek analizować.
+
+   Najprościej pasywnym nasłuchem — otwórz port **wyłącznie do odczytu**,
+   zbierz kilka sekund ruchu i policz wystąpienia znaczników:
+
+   ```python
+   import serial
+
+   port = serial.Serial()
+   port.port, port.baudrate, port.timeout = "/dev/ttyUSB0", 115200, 0.2
+   port.dtr = port.rts = False  # nie asertuj DTR/RTS - część płytek resetuje się przy otwarciu
+   port.open()
+   data = b"".join(port.read(4096) for _ in range(25))
+   port.close()
+
+   for name, sof in (("MAVLink v1", b"\xfe"), ("MAVLink v2", b"\xfd"), ("wirewing", b"\xa5\x5a")):
+       print(name, data.count(sof))
+   ```
+
+   Przewaga `0xFE`/`0xFD` przy zerze na `A5 5A` przesądza sprawę: zainstaluj
+   `wirewing[mavlink]` i nie odtwarzaj niczego ręcznie. O konsekwencjach
+   licencyjnych tego extra (LGPL-3.0) mówi README.
+
+   Przy nasłuchu przydaje się też identyfikacja sprzętu po USB —
+   `python -m serial.tools.list_ports -v` pokaże VID:PID i producenta, co
+   często wskazuje płytę szybciej niż analiza ruchu.
 2. **Podsłuchaj oryginalną aplikację.** Wepnij analizator logiczny albo
    przejściówkę w tryb pasywny między aplikacją producenta a urządzeniem
    i zapisz ruch w spoczynku.
