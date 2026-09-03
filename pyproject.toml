@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wirewing"
+dynamic = ["version"]
+description = "Sterowanie bezzałogowcami przez łącze szeregowe RS-232"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Grzegorz Oleksy", email = "oleksy@cdest.eu" }]
+keywords = ["uav", "drone", "rs232", "serial", "telemetry", "ground-control"]
+
+# UWAGA: PolyForm Noncommercial nie jest licencją zatwierdzoną przez OSI.
+# Identyfikator SPDX jest poprawny i rozpoznawany przez skanery zależności,
+# ale PyPI oznaczy pakiet jako niestandardowo licencjonowany. To jest zamierzone.
+license = "PolyForm-Noncommercial-1.0.0"
+license-files = ["LICENSE.md"]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: Other/Proprietary License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+  "Typing :: Typed",
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+serial = ["pyserial>=3.5"]
+dev = [
+  "pyserial>=3.5",
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pip-licenses>=5.0",
+]
+
+[project.scripts]
+wirewing = "wirewing.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/OWNER/wirewing"
+Source = "https://github.com/OWNER/wirewing"
+Issues = "https://github.com/OWNER/wirewing/issues"
+"Commercial license" = "https://github.com/OWNER/wirewing/blob/main/COMMERCIAL.md"
+
+[tool.hatch.version]
+path = "src/wirewing/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wirewing"]
+
+# --- jakość kodu ------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RET", "PL", "RUF", "SLF", "TID"]
+ignore = [
+  "PLR2004", # magiczne liczby — w kodzie protokołu offsety są czytelniejsze wprost
+  "PLR0913", # liczba argumentów — SerialConfig z natury ma ich dużo
+  "RUF022",  # __all__ grupujemy tematycznie, nie alfabetycznie
+  "RUF023",  # __slots__ jw. — kolejność odpowiada układowi pól
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["SLF001", "PLR2004", "B017"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+strict = true
+warn_unreachable = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-q --strict-markers --strict-config"
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+source = ["src/wirewing"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "raise NotImplementedError"]

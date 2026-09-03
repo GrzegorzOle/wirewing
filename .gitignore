@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+.idea/
+.vscode/
+.DS_Store
+
+# Zrzuty ruchu z analizy protokołu — bywają w nich numery seryjne urządzeń
+# i dane lokalizacyjne. Nie commituj ich bez przejrzenia.
+captures/
+*.cap
+*.sallog
