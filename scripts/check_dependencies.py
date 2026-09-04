@@ -57,7 +57,17 @@ IGNORED = {"wirewing", "pip", "setuptools", "wheel"}
 #
 # Wpis tutaj NIE przesłania statusu FORBIDDEN — licencji silnie copyleft nie da
 # się przepchnąć przez tę tablicę i to jest zamierzone.
-ACCEPTED: dict[str, str] = {}
+ACCEPTED: dict[str, str] = {
+    "pathspec": (
+        "MPL-2.0. Zależność wyłącznie build-time — wciąga ją hatchling przy budowaniu "
+        "pakietu i nie trafia ani do wheela, ani do żadnej instalacji użytkownika. "
+        "MPL-2.0 jest copyleftem na poziomie pliku: obowiązki powstają przy "
+        "rozpowszechnianiu zmodyfikowanych plików objętych tą licencją, a my ich nie "
+        "modyfikujemy i nie rozpowszechniamy. Sama MPL-2.0 wprost dopuszcza łączenie "
+        "z kodem na innych warunkach jako Larger Work, więc nawet dystrybucja nie "
+        "kolidowałaby z modelem projektu."
+    ),
+}
 
 
 def _license_of(dist: metadata.Distribution) -> str:
