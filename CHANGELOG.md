@@ -17,6 +17,9 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 ### Zmienione
 
+- `LICENSE.md` zawiera dosłowny tekst PolyForm Noncommercial 1.0.0 zamiast
+  zaślepki. Job `license-file` w CI przechodzi.
+
 - README opisuje warianty instalacji i wprost stwierdza, że `pymavlink` nie jest
   i nie będzie zależnością projektu — urządzenia mówiące MAVLinkiem obsługuje się
   osobno zainstalowaną biblioteką, poza wirewing.
@@ -25,7 +28,6 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 ### Do zrobienia przed 0.1.0
 
-- [ ] Wstawić dosłowny tekst licencji: `python scripts/fetch_license.py`
 - [ ] Uzupełnić cennik w `COMMERCIAL.md`
 - [ ] Zlecić przegląd `CLA.md` kancelarii IP
 - [ ] Sprawdzić nazwę „wirewing" w [TMview](https://www.tmdn.org/tmview/) i na PyPI
