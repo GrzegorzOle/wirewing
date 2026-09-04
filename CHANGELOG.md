@@ -46,10 +46,17 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
       rej. USA 5976778) i zbliżone fonetycznie (`WIRENG`, rej. USA 3910211,
       anteny i sprzęt telekomunikacyjny) nie zawierają tego ciągu i w tym
       zapytaniu się nie pojawiają
-- [ ] Zlecić ocenę podobieństwa znaku kancelarii — razem z przeglądem `CLA.md`.
-      Wyszukiwanie tekstowe nie zastępuje badania zdolności rejestrowej, a przy
-      projekcie przeznaczonym do licencjonowania komercyjnego to właściwy poziom
-      staranności
+- [ ] **Rozstrzygnąć kolizję z EUTM `WingWire`** (EUIPO 019286909, zgłoszony
+      04/12/2025, zarejestrowany, klasy **9 i 42**, Manzke Tobias). Te same dwa
+      człony słowne w odwrotnej kolejności, w identycznych klasach, na rynku UE.
+      Znaleziony zapytaniem `wire wing` w TMview — zapytanie o `wirewing` go nie
+      pokazuje, bo nie zawiera tego ciągu.
+      Do zlecenia kancelarii razem z przeglądem `CLA.md`: ocena podobieństwa oraz
+      ryzyka sprzeciwu przy komercyjnym używaniu nazwy. Przed decyzją warto
+      otworzyć faktyczny wykaz towarów i usług tej rejestracji w eSearch plus —
+      z listy wyników widać same numery klas, nie ich zakres.
+      Zmiana nazwy na tym etapie (brak publikacji na PyPI, brak użytkowników,
+      brak umów) jest nieporównanie tańsza niż po wydaniu
 - [ ] Podmienić `OWNER` w `pyproject.toml` i `README.md` na nazwę konta GitHub
 - [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
 
