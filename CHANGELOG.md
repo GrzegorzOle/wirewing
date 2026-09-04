@@ -31,6 +31,9 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
   osobno zainstalowaną biblioteką, poza wirewing.
 - `docs/protocol.md` zawiera gotowy fragment do pasywnego rozpoznania, czy
   urządzenie mówi MAVLinkiem, zanim zacznie się odtwarzać protokół.
+- `scripts/fetch_license.py` przy odrzuconym certyfikacie TLS wypisuje wyjaśnienie
+  zamiast surowego stosu wywołań: wskazuje lokalne skanowanie HTTPS jako najczęstszą
+  przyczynę, odradza wyłączanie weryfikacji i podaje trzy drogi wyjścia.
 
 ### Do zrobienia przed 0.1.0
 

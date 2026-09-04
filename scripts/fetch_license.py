@@ -13,11 +13,14 @@ from __future__ import annotations
 
 import argparse
 import re
+import ssl
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 URL = "https://polyformproject.org/licenses/noncommercial/1.0.0/"
+HOST = "polyformproject.org"
 ROOT = Path(__file__).resolve().parent.parent
 LICENSE_FILE = ROOT / "LICENSE.md"
 
@@ -62,10 +65,43 @@ def _html_to_text(html: str) -> str:
     return "\n".join(line.strip() for line in body.splitlines()).strip()
 
 
+def _tls_hint(reason: ssl.SSLCertVerificationError) -> str:
+    """Podpowiedź przy odrzuconym certyfikacie — najczęściej to lokalne skanowanie HTTPS."""
+    return (
+        f"Weryfikacja certyfikatu TLS nie powiodła się: {reason.verify_message or reason}\n\n"
+        "Najczęstsza przyczyna to lokalne skanowanie HTTPS — antywirus albo proxy\n"
+        "podstawia własny certyfikat. Bywa, że taki certyfikat nie spełnia RFC 5280\n"
+        "(np. basicConstraints nie jest oznaczone jako krytyczne) i OpenSSL odrzuca go\n"
+        "nawet wtedy, gdy jest poprawnie zainstalowany w magazynie systemowym.\n\n"
+        "NIE wyłączaj weryfikacji certyfikatu. To jest tekst licencji publikowanego\n"
+        "oprogramowania — przyjmowanie go z niezweryfikowanego kanału jest dokładnie\n"
+        "tym ryzykiem, przed którym broni ten skrypt. Zamiast tego:\n\n"
+        f"  1. dodaj {HOST} do wyjątków skanowania HTTPS, albo\n"
+        "  2. uruchom skrypt z sieci bez przechwytywania (w CI działa), albo\n"
+        f"  3. otwórz {URL}\n"
+        "     w przeglądarce, skopiuj tekst licencji i wklej go między znaczniki\n"
+        "     w LICENSE.md — skrypt z opcją --check potwierdzi kompletność."
+    )
+
+
+def _download() -> str:
+    """Pobierz stronę, zamieniając błędy sieci na komunikat, z którego coś wynika."""
+    try:
+        with urllib.request.urlopen(URL, timeout=30) as response:
+            return response.read().decode("utf-8")
+    except urllib.error.URLError as exc:
+        reason = getattr(exc, "reason", exc)
+        if isinstance(reason, ssl.SSLCertVerificationError):
+            raise SystemExit(_tls_hint(reason)) from exc
+        raise SystemExit(
+            f"Nie udało się pobrać {URL}\n  powód: {reason}\n\n"
+            "Sprawdź połączenie albo wklej tekst licencji ręcznie między znaczniki\n"
+            "w LICENSE.md — skrypt z opcją --check potwierdzi kompletność."
+        ) from exc
+
+
 def fetch() -> str:
-    with urllib.request.urlopen(URL, timeout=30) as response:
-        html = response.read().decode("utf-8")
-    text = _html_to_text(html)
+    text = _html_to_text(_download())
 
     missing = [marker for marker in SANITY_MARKERS if marker not in text]
     if missing:
