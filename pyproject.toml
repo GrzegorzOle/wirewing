@@ -51,10 +51,10 @@ dev = [
 wirewing = "wirewing.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/OWNER/wirewing"
-Source = "https://github.com/OWNER/wirewing"
-Issues = "https://github.com/OWNER/wirewing/issues"
-"Commercial license" = "https://github.com/OWNER/wirewing/blob/main/COMMERCIAL.md"
+Homepage = "https://github.com/GrzegorzOle/wirewing"
+Source = "https://github.com/GrzegorzOle/wirewing"
+Issues = "https://github.com/GrzegorzOle/wirewing/issues"
+"Commercial license" = "https://github.com/GrzegorzOle/wirewing/blob/main/COMMERCIAL.md"
 
 [tool.hatch.version]
 path = "src/wirewing/__init__.py"

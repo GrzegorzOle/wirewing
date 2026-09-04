@@ -57,7 +57,7 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
       z listy wyników widać same numery klas, nie ich zakres.
       Zmiana nazwy na tym etapie (brak publikacji na PyPI, brak użytkowników,
       brak umów) jest nieporównanie tańsza niż po wydaniu
-- [ ] Podmienić `OWNER` w `pyproject.toml` i `README.md` na nazwę konta GitHub
+- [x] ~~Podmienić `OWNER` w `pyproject.toml` i `README.md`~~ — `GrzegorzOle`
 - [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
 
 ## [0.1.0] — nie wydano

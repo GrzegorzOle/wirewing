@@ -35,7 +35,7 @@ projektu, nie zbieg okoliczności — pilnuje go `scripts/check_dependencies.py`
 Z repozytorium, do pracy nad kodem:
 
 ```bash
-git clone https://github.com/OWNER/wirewing.git
+git clone https://github.com/GrzegorzOle/wirewing.git
 cd wirewing
 pip install -e ".[dev]"
 pytest
