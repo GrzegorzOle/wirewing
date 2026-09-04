@@ -57,18 +57,7 @@ IGNORED = {"wirewing", "pip", "setuptools", "wheel"}
 #
 # Wpis tutaj NIE przesłania statusu FORBIDDEN — licencji silnie copyleft nie da
 # się przepchnąć przez tę tablicę i to jest zamierzone.
-ACCEPTED = {
-    "pymavlink": (
-        "LGPL-3.0. Zależność opcjonalna (extras: mavlink), nigdy nie wciągana "
-        "przez instalację domyślną. Instalowana osobno z PyPI i importowana "
-        "dynamicznie w czasie wykonania, więc użytkownik może ją podmienić na "
-        "własną wersję albo usunąć — to spełnia warunek relinkowania z LGPLv3 "
-        "§4. Kod wirewing pozostaje na PolyForm Noncommercial; licencjobiorca "
-        "komercyjny przestrzega LGPL dla samego pymavlink we własnym zakresie. "
-        "Zgodne z zastrzeżeniem z CONTRIBUTING.md: LGPL wyłącznie dynamicznie "
-        "i po uzgodnieniu."
-    ),
-}
+ACCEPTED: dict[str, str] = {}
 
 
 def _license_of(dist: metadata.Distribution) -> str:
