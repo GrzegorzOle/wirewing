@@ -38,7 +38,13 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 ### Do zrobienia przed 0.1.0
 
 - [ ] Zlecić przegląd `CLA.md` kancelarii IP
-- [ ] Sprawdzić nazwę „wirewing" w [TMview](https://www.tmdn.org/tmview/) i na PyPI
+- [x] ~~Sprawdzić nazwę „wirewing" na PyPI~~ — wolna (`wirewing` i `wire-wing`,
+      HTTP 404 z API PyPI)
+- [ ] Sprawdzić nazwę „wirewing" w [TMview](https://www.tmdn.org/tmview/) —
+      klasy 9 (oprogramowanie) i 42 (usługi IT). Wstępny przegląd rejestru USA
+      nie wykazał dokładnego trafienia; najbliższy znak to WIRENG (anteny
+      i sprzęt telekomunikacyjny, rej. 3910211, aktywny). Rejestr UE
+      niesprawdzony — warto zlecić razem z przeglądem CLA
 - [ ] Podmienić `OWNER` w `pyproject.toml` i `README.md` na nazwę konta GitHub
 - [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
 
