@@ -105,8 +105,8 @@ Kolejność, która zwykle najszybciej daje wynik:
    ```
 
    Przewaga `0xFE`/`0xFD` przy zerze na `A5 5A` przesądza sprawę: zainstaluj
-   `wirewing[mavlink]` i nie odtwarzaj niczego ręcznie. O konsekwencjach
-   licencyjnych tego extra (LGPL-3.0) mówi README.
+   osobno `pymavlink` i nie odtwarzaj niczego ręcznie. Nie jest to zależność
+   wirewing i nią nie będzie — powody w README.
 
    Wykryta wersja MAVLinku mówi o tym, czego urządzenie używa *teraz*, a nie
    co potrafi: ArduPilot dopasowuje wersję protokołu do stacji naziemnej na

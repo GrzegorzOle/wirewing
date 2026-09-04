@@ -7,19 +7,19 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 ### Dodane
 
-- Zależność opcjonalna `wirewing[mavlink]` (`pymavlink`) dla urządzeń mówiących
-  MAVLinkiem. Instalacja domyślna i `wirewing[serial]` pozostają bez niej.
 - `scripts/probe_link.py` — pasywne rozpoznanie protokołu urządzenia. Liczy
   ramki MAVLink v1/v2 i wirewing, weryfikując ich łańcuchowanie zamiast samych
   znaczników, identyfikuje płytę po VID:PID i nie wysyła na łącze ani bajtu.
-- `scripts/check_dependencies.py` rozróżnia teraz status `ACCEPTED` — świadomą
-  decyzję licencyjną wraz z uzasadnieniem, raportowaną w zestawieniu licencji.
-  Wpis na tej liście nie przesłania statusu `FORBIDDEN`.
+- `scripts/check_dependencies.py` rozróżnia status `ACCEPTED` — miejsce na
+  świadomą decyzję licencyjną wraz z uzasadnieniem, raportowaną w zestawieniu
+  licencji. Tablica jest pusta i taka ma zostać, dopóki wszystkie zależności są
+  permisywne. Wpis na tej liście nie przesłania statusu `FORBIDDEN`.
 
 ### Zmienione
 
-- README opisuje warianty instalacji i konsekwencje licencyjne extra `mavlink`
-  (`pymavlink` jest na LGPL-3.0, w odróżnieniu od pozostałych zależności).
+- README opisuje warianty instalacji i wprost stwierdza, że `pymavlink` nie jest
+  i nie będzie zależnością projektu — urządzenia mówiące MAVLinkiem obsługuje się
+  osobno zainstalowaną biblioteką, poza wirewing.
 - `docs/protocol.md` zawiera gotowy fragment do pasywnego rozpoznania, czy
   urządzenie mówi MAVLinkiem, zanim zacznie się odtwarzać protokół.
 
@@ -31,8 +31,6 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 - [ ] Sprawdzić nazwę „wirewing" w [TMview](https://www.tmdn.org/tmview/) i na PyPI
 - [ ] Podmienić `OWNER` w `pyproject.toml` i `README.md` na nazwę konta GitHub
 - [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
-- [ ] Napisać warstwę integracyjną z MAVLinkiem — extra `mavlink` udostępnia
-      na razie samą zależność, bez kodu
 - [ ] Rozstrzygnąć `pathspec` (MPL-2.0, wciągany przez `hatchling`) — zależność
       wyłącznie build-time, nie jest dystrybuowana z pakietem
 

@@ -28,7 +28,9 @@ Warianty instalacji:
 |---|---|---|
 | `pip install wirewing` | nic | — |
 | `pip install "wirewing[serial]"` | `pyserial` | BSD |
-| `pip install "wirewing[mavlink]"` | `pymavlink` | **LGPL-3.0** — patrz [Urządzenia na MAVLink](#urządzenia-na-mavlink) |
+
+Wszystkie zależności są na licencjach permisywnych i to jest warunek brzegowy
+projektu, nie zbieg okoliczności — pilnuje go `scripts/check_dependencies.py`.
 
 Z repozytorium, do pracy nad kodem:
 
@@ -76,28 +78,26 @@ ono MAVLinkiem** — ogromna część kontrolerów lotu tak właśnie robi. Rozp
 to po znaczniku początku ramki: `0xFE` (v1) lub `0xFD` (v2) zamiast `A5 5A`.
 Procedura sprawdzenia jest w [docs/protocol.md](docs/protocol.md).
 
-Jeśli tak jest, nie ma sensu niczego odtwarzać — zainstaluj:
+Jeśli tak jest, nie odtwarzaj niczego ręcznie — sięgnij po
+[pymavlink](https://pypi.org/project/pymavlink/), instalując go **osobno**:
 
 ```bash
-pip install "wirewing[mavlink]"
+pip install pymavlink
 ```
 
-> [!IMPORTANT]
-> **`pymavlink` jest na LGPL-3.0**, a nie na licencji permisywnej jak reszta
-> zależności. Dlatego jest **wyłącznie opcjonalny**: instalacja domyślna oraz
-> `wirewing[serial]` nie wciągają ani jednej linijki kodu na LGPL.
+> [!NOTE]
+> `pymavlink` **nie jest i nie będzie zależnością wirewing** — nawet opcjonalną.
+> Jest na LGPL-3.0, a wszystkie zależności tego projektu są permisywne i tak ma
+> zostać. Nie chodzi o to, że dałoby się to pogodzić z licencją; chodzi o to, że
+> wirewing jest biblioteką do własnego protokołu szeregowego, a nie nakładką na
+> ekosystem MAVLinka.
 >
-> Zależność jest instalowana osobno z PyPI i importowana dynamicznie w czasie
-> wykonania, więc możesz ją podmienić na własną wersję albo usunąć — co spełnia
-> warunek relinkowania z LGPLv3 §4. Kod wirewing pozostaje na PolyForm
-> Noncommercial. Jeśli masz licencję komercyjną na wirewing, zgodność z LGPL
-> dla samego `pymavlink` pozostaje po twojej stronie.
->
-> Decyzja jest odnotowana w `scripts/check_dependencies.py` i raportowana przy
-> każdym przebiegu CI ze statusem `ACCEPTED`.
+> Powyższa wskazówka jest więc informacją, dokąd pójść, jeśli okaże się, że
+> twoje urządzenie mówi czymś innym niż zakładałeś — a nie zaproszeniem do
+> mieszania obu bibliotek.
 
-Warstwa integracyjna z MAVLinkiem nie jest jeszcze napisana — na razie extra
-udostępnia samą zależność.
+Do samego rozpoznania protokołu `pymavlink` nie jest potrzebny —
+`scripts/probe_link.py` radzi sobie z tym na `pyserial` i parserze wirewing.
 
 ## Stan projektu
 
@@ -109,7 +109,6 @@ udostępnia samą zależność.
 | ACK/NAK, ponawianie, heartbeat | gotowe |
 | **Mapa rzeczywistych ID wiadomości urządzenia** | **do uzupełnienia** |
 | Dekodowanie ładunku telemetrii | do zrobienia |
-| Warstwa integracyjna z MAVLinkiem (`wirewing[mavlink]`) | do zrobienia |
 | GUI / stacja naziemna | poza zakresem tego repozytorium |
 
 > [!WARNING]

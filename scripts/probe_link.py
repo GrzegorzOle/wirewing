@@ -162,9 +162,8 @@ def verdict(counts: dict[str, int]) -> str:
         )
     if best.startswith("MAVLink"):
         return (
-            f"To jest {best}. Nie odtwarzaj protokołu ręcznie — zainstaluj "
-            "`wirewing[mavlink]` i użyj pymavlink. Uwaga: to zależność na LGPL-3.0, "
-            "szczegóły w README."
+            f"To jest {best}. Nie odtwarzaj protokołu ręcznie — zainstaluj osobno "
+            "pymavlink (LGPL-3.0, nie jest zależnością wirewing; powody w README)."
         )
     return "To jest protokół wirewing — ramki przechodzą kontrolę CRC."
 
