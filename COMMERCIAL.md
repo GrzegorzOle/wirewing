@@ -31,23 +31,32 @@ Nie masz pewności? Napisz. Krótki opis zastosowania wystarczy, a odpowiedź
 
 ---
 
-## Cennik
+## Wycena
 
-> **DO USTALENIA PRZED PUBLIKACJĄ REPOZYTORIUM.** Widełki poniżej są
-> szablonem — podmień je na swoje. Podanie *jakiejkolwiek* liczby działa
-> wielokrotnie lepiej niż samo „skontaktuj się z nami": firma, która nie
-> potrafi oszacować kosztu w 30 sekund, zwykle po prostu rezygnuje i szuka
-> dalej, zamiast napisać.
+> [!NOTE]
+> wirewing jest w fazie **alfa** — warstwa protokołu wymaga jeszcze zmapowania
+> pod konkretne urządzenie. Dlatego nie publikuję regularnego cennika. Sprzedaż
+> licencji na oprogramowanie, którego dojrzałości sam jeszcze nie deklaruję,
+> tworzyłaby zobowiązania wsparcia, jakich nie chcę składać na wyrost.
+>
+> Do czasu wydania stabilnego **każda licencja komercyjna wyceniana jest
+> indywidualnie**. Napisz, opisz zastosowanie i skalę — odpowiem konkretną kwotą
+> w ciągu 2 dni roboczych. Regularny cennik pojawi się tutaj wraz z wersją 1.0.
 
-| Pakiet | Dla kogo | Cena | Zakres |
-|---|---|---|---|
-| **Indywidualny** | jednoosobowa działalność, do 3 dronów | *X* EUR / rok | użycie komercyjne, aktualizacje, wsparcie mailowe |
-| **Zespołowy** | firma do 25 osób | *Y* EUR / rok | j.w. + priorytetowe zgłoszenia błędów |
-| **OEM / redystrybucja** | producenci sprzętu, integratorzy | wycena indywidualna | prawo do dystrybucji w produkcie, znak własny, wsparcie wdrożeniowe |
-| **Wieczysta** | wymóg braku zależności od dostawcy | wycena indywidualna | bezterminowe prawo do bieżącej wersji + 12 mies. aktualizacji |
+Model licencjonowania wygląda tak, żebyś wiedział, czego się spodziewać:
+
+| Pakiet | Dla kogo | Zakres |
+|---|---|---|
+| **Indywidualny** | jednoosobowa działalność, do 3 dronów | użycie komercyjne, aktualizacje, wsparcie mailowe |
+| **Zespołowy** | firma do 25 osób | j.w. + priorytetowe zgłoszenia błędów |
+| **OEM / redystrybucja** | producenci sprzętu, integratorzy | prawo do dystrybucji w produkcie, znak własny, wsparcie wdrożeniowe |
+| **Wieczysta** | wymóg braku zależności od dostawcy | bezterminowe prawo do bieżącej wersji + 12 mies. aktualizacji |
 
 Każdy pakiet obejmuje wersję źródłową bez ograniczeń licencji niekomercyjnej,
 prawo do modyfikacji na własny użytek oraz zwolnienie z obowiązku ujawniania zmian.
+
+Jeśli potrzebujesz licencji już na tym etapie — napisz. Warunki ustalimy
+z uwzględnieniem tego, na jakim etapie rozwoju projekt faktycznie jest.
 
 ---
 

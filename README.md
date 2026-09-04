@@ -11,7 +11,7 @@ się na wyjątku w twoim callbacku.
 > **Licencja niekomercyjna.** wirewing jest darmowy dla osób prywatnych,
 > badaczy, uczelni, organizacji pozarządowych, służb ratowniczych i instytucji
 > publicznych. **Użycie w działalności gospodarczej — również wyłącznie
-> wewnętrzne — wymaga licencji komercyjnej.** Warunki i cennik:
+> wewnętrzne — wymaga licencji komercyjnej.** Warunki i wycena:
 > **[COMMERCIAL.md](COMMERCIAL.md)** · kontakt: oleksy@cdest.eu
 
 ---
