@@ -40,11 +40,16 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 - [ ] Zlecić przegląd `CLA.md` kancelarii IP
 - [x] ~~Sprawdzić nazwę „wirewing" na PyPI~~ — wolna (`wirewing` i `wire-wing`,
       HTTP 404 z API PyPI)
-- [ ] Sprawdzić nazwę „wirewing" w [TMview](https://www.tmdn.org/tmview/) —
-      klasy 9 (oprogramowanie) i 42 (usługi IT). Wstępny przegląd rejestru USA
-      nie wykazał dokładnego trafienia; najbliższy znak to WIRENG (anteny
-      i sprzęt telekomunikacyjny, rej. 3910211, aktywny). Rejestr UE
-      niesprawdzony — warto zlecić razem z przeglądem CLA
+- [x] ~~Sprawdzić nazwę „wirewing" w TMview~~ — brak trafień przy operatorze
+      „Zawiera", we wszystkich urzędach i klasach. Uwaga: to wyszukiwanie
+      tekstowe, nie badanie podobieństwa. Formy dwuczłonowe (`WIRE & WING`,
+      rej. USA 5976778) i zbliżone fonetycznie (`WIRENG`, rej. USA 3910211,
+      anteny i sprzęt telekomunikacyjny) nie zawierają tego ciągu i w tym
+      zapytaniu się nie pojawiają
+- [ ] Zlecić ocenę podobieństwa znaku kancelarii — razem z przeglądem `CLA.md`.
+      Wyszukiwanie tekstowe nie zastępuje badania zdolności rejestrowej, a przy
+      projekcie przeznaczonym do licencjonowania komercyjnego to właściwy poziom
+      staranności
 - [ ] Podmienić `OWNER` w `pyproject.toml` i `README.md` na nazwę konta GitHub
 - [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
 
