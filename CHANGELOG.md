@@ -7,6 +7,11 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 ### Dodane
 
+- `wirewing.mavlink` — natywny koder i dekoder MAVLink, bez zależności
+  zewnętrznych. Dekoduje v1 i v2, koduje v1, weryfikuje sumy kontrolne z bajtem
+  `CRC_EXTRA` i odwzorowuje komendy na `COMMAND_LONG`. Zweryfikowany wobec ramki
+  przechwyconej z rzeczywistego kontrolera, więc test wykrywa błąd w CRC albo
+  w tablicy `CRC_EXTRA`, którego sprawdzenie „zakoduj i zdekoduj" by przepuściło.
 - `scripts/probe_link.py` — pasywne rozpoznanie protokołu urządzenia. Liczy
   ramki MAVLink v1/v2 i wirewing, weryfikując ich łańcuchowanie zamiast samych
   znaczników, identyfikuje płytę po VID:PID i nie wysyła na łącze ani bajtu.
@@ -37,7 +42,6 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
 
 ### Do zrobienia przed 0.1.0
 
-- [ ] Zlecić przegląd `CLA.md` kancelarii IP
 - [x] ~~Sprawdzić nazwę „wirewing" na PyPI~~ — wolna (`wirewing` i `wire-wing`,
       HTTP 404 z API PyPI)
 - [x] ~~Sprawdzić nazwę „wirewing" w TMview~~ — brak trafień przy operatorze
@@ -46,6 +50,16 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
       rej. USA 5976778) i zbliżone fonetycznie (`WIRENG`, rej. USA 3910211,
       anteny i sprzęt telekomunikacyjny) nie zawierają tego ciągu i w tym
       zapytaniu się nie pojawiają
+- [x] ~~Podmienić `OWNER` w `pyproject.toml` i `README.md`~~ — `GrzegorzOle`
+- [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
+
+### Odłożone — poza bramką 0.1.0
+
+Projekt jest prototypem, a ten kod jest jednym z jego składników. Poniższe
+sprawy stają się istotne dopiero przy komercjalizacji i nie blokują wydania.
+
+- [ ] Przegląd `CLA.md` kancelarią IP — potrzebny przed przyjęciem pierwszego
+      zewnętrznego wkładu, nie wcześniej
 - [ ] **Rozstrzygnąć kolizję z EUTM `WingWire`** (EUIPO 019286909, zgłoszony
       04/12/2025, zarejestrowany, klasy **9 i 42**, Manzke Tobias). Te same dwa
       człony słowne w odwrotnej kolejności, w identycznych klasach, na rynku UE.
@@ -57,8 +71,6 @@ wersjonowanie według [SemVer](https://semver.org/lang/pl/).
       z listy wyników widać same numery klas, nie ich zakres.
       Zmiana nazwy na tym etapie (brak publikacji na PyPI, brak użytkowników,
       brak umów) jest nieporównanie tańsza niż po wydaniu
-- [x] ~~Podmienić `OWNER` w `pyproject.toml` i `README.md`~~ — `GrzegorzOle`
-- [ ] Zastąpić referencyjne `MsgId` rzeczywistymi ID urządzenia
 
 ## [0.1.0] — nie wydano
 
